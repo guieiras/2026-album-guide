@@ -55,7 +55,8 @@ ViewFunctions = {
 }
 
 document.querySelectorAll('[js-option]').forEach((element) => {
-  element.addEventListener('click', () => {
+  element.addEventListener('click', (event) => {
+    event.preventDefault();
     ViewFunctions[element.getAttribute('js-option')]()
   })
 });
