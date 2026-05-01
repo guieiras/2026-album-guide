@@ -1,22 +1,22 @@
-import database from '../../../src/database'
-import { ObjectId } from 'mongodb'
+import { sql } from '../../../src/database';
 
 export default (req, res) => {
-  if (req.method === 'GET') { return show(req, res) }
-  if (req.method === 'POST') { return update(req, res) }
-  if (req.method === 'DELETE') { return destroy(req, res) }
+  if (req.method === 'GET') { return show(req, res); }
+  if (req.method === 'POST') { return update(req, res); }
+  if (req.method === 'DELETE') { return destroy(req, res); }
 
-  return res.status(404).send({ error: 'Route not found' })
+  return res.status(404).send({ error: 'Route not found' });
 }
 
-async function show (req, res) {
+async function show(req, res) {
   try {
-    const album = await database.get('albums').findOne({
-      _id: ObjectId(req.query.id)
-    });
+    const result = await sql(
+      'SELECT * FROM albums WHERE id = $1',
+      [req.query.id]
+    );
 
-    if (album) {
-      res.json(album);
+    if (result.length > 0) {
+      res.json(result[0]);
     } else {
       res.status(404).json({});
     }
@@ -25,38 +25,34 @@ async function show (req, res) {
   }
 }
 
-async function update (req, res) {
+async function update(req, res) {
   const stickers = req.body.stickers;
 
   if (stickers) {
-    const updateParams = Object
-      .keys(stickers)
-      .reduce((memo, stickNumber) => {
-        memo[`stickers.${stickNumber}`] = stickers[stickNumber];
-        return memo;
-      }, {})
+    const result = await sql(
+      'UPDATE albums SET stickers = stickers || $1 WHERE id = $2 RETURNING stickers',
+      [stickers, req.query.id]
+    );
 
-    const albums = database.get('albums')
-    await albums.update({ _id: ObjectId(req.query.id) }, { $set: updateParams })
-
-    res.json({ _id: req.query.id, stickers })
+    res.json({ _id: req.query.id, stickers: result[0].stickers });
   } else {
     res.status(422).json({});
   }
 }
 
-async function destroy (req, res) {
+async function destroy(req, res) {
   try {
-    const album = await database.get('albums').findOneAndDelete({
-      _id: ObjectId(req.params.id), name: req.body.name
-    });
+    const result = await sql(
+      'DELETE FROM albums WHERE id = $1 AND name = $2 RETURNING id',
+      [req.query.id, req.body.name]
+    );
 
-    if (album) {
-      res.status(204);
+    if (result.length > 0) {
+      res.status(204).end();
     } else {
-      res.status(404);
+      res.status(404).end();
     }
-  } catch {
-    res.status(404);
+  } catch (error) {
+    res.status(404).end();
   }
 }

@@ -1,10 +1,10 @@
 {
-  "short_name": "Guia Álbum 2022",
-  "name": "Guia do Álbum da Copa do Mundo 2022",
+  "short_name": "Guia Álbum 2026",
+  "name": "Guia do Álbum da Copa do Mundo 2026",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#8B2B0C",
-  "theme_color": "#2875CA",
+  "background_color": "#5A5A5A",
+  "theme_color": "#CECECE",
   "icons": [
     {
       "src": "icon.png",

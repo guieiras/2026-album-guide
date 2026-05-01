@@ -1,2 +1,1 @@
-# 2022 Stickers Album Guide
-
+# 2026 Stickers Album Guide

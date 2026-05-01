@@ -1,3 +1,3 @@
-import monk from 'monk'
+import { neon } from '@neondatabase/serverless';
 
-export default monk(process.env.DATABASE_URL)
+export const sql = neon(process.env.DATABASE_URL);

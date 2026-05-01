@@ -1,5 +1,5 @@
 {
-  "name": "2022-album-guide",
+  "name": "2026-album-guide",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "monk": "^7.3.4",
-    "next": "12.2.5"
+    "@neondatabase/serverless": "^0.10.0",
+    "next": "^16.2.4"
   },
   "devDependencies": {
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5"
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.4"
   }
 }

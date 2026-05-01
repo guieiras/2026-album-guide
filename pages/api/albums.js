@@ -1,4 +1,4 @@
-import database from '../../src/database';
+import { sql } from '../../src/database';
 
 export default (req, res) => {
   if (req.method === 'POST') { return create(req, res); }
@@ -8,12 +8,14 @@ export default (req, res) => {
 
 async function create(req, res) {
   try {
-    const album = await database.get('albums').insert({
-      name: req.body.name, stickers: {}
-    });
+    const result = await sql(
+      'INSERT INTO albums (name, stickers) VALUES ($1, $2) RETURNING id, name',
+      [req.body.name, {}]
+    );
 
-    res.json({ name: album.name, token: album._id.toString() });
+    const album = result[0];
+    res.json({ name: album.name, token: album.id });
   } catch (error) {
-    response.status(422).json(error);
+    res.status(422).json(error);
   }
 }
