@@ -50,7 +50,7 @@ ViewFunctions = {
     populateTokenForm();
   },
   copyToken: function () {
-    Clipboard.copy(localStorage.getItem('albumToken'));
+    navigator.clipboard.writeText(localStorage.getItem('albumToken'));
   }
 }
 
