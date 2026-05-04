@@ -13,8 +13,8 @@ const album = [
   }, {
     name: "África do Sul",
     stickers: [
-      "ZAF 1", "ZAF 2", "ZAF 3", "ZAF 4", "ZAF 5", "ZAF 6", "ZAF 7", "ZAF 8", "ZAF 9", "ZAF 10",
-      "ZAF 11", "ZAF 12", "ZAF 13", "ZAF 14", "ZAF 15", "ZAF 16", "ZAF 17", "ZAF 18", "ZAF 19", "ZAF 20"
+      "RSA 1", "RSA 2", "RSA 3", "RSA 4", "RSA 5", "RSA 6", "RSA 7", "RSA 8", "RSA 9", "RSA 10",
+      "RSA 11", "RSA 12", "RSA 13", "RSA 14", "RSA 15", "RSA 16", "RSA 17", "RSA 18", "RSA 19", "RSA 20"
     ]
   }, {
     name: "Coréia do Sul",
@@ -67,8 +67,8 @@ const album = [
   }, {
     name: "Haiti",
     stickers: [
-      "HTI 1", "HTI 2", "HTI 3", "HTI 4", "HTI 5", "HTI 6", "HTI 7", "HTI 8", "HTI 9", "HTI 10",
-      "HTI 11", "HTI 12", "HTI 13", "HTI 14", "HTI 15", "HTI 16", "HTI 17", "HTI 18", "HTI 19", "HTI 20"
+      "HAI 1", "HAI 2", "HAI 3", "HAI 4", "HAI 5", "HAI 6", "HAI 7", "HAI 8", "HAI 9", "HAI 10",
+      "HAI 11", "HAI 12", "HAI 13", "HAI 14", "HAI 15", "HAI 16", "HAI 17", "HAI 18", "HAI 19", "HAI 20"
     ]
   }, {
     name: "Escócia",
