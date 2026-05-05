@@ -2,7 +2,7 @@ const album = [
   {
     name: "Página Inicial",
     stickers: [
-      "FWC 00", "FWC 01", "FWC 02", "FWC 03", "FWC 04", "FWC 05", "FWC 06", "FWC 07", "FWC 08", "FWC 09"
+      "00", "FWC 01", "FWC 02", "FWC 03", "FWC 04", "FWC 05", "FWC 06", "FWC 07", "FWC 08"
     ]
   }, {
     name: "México",
