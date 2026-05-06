@@ -27,6 +27,10 @@ function populateAlbum() {
       sectionContent.appendChild(stickerNode);
       stickerButton.addEventListener('click', () => {
         const mode = localStorage.getItem('mode');
+        if (mode == 'delete') {
+          removeFromSandbox(sticker);
+        }
+
         if (mode == 'write' || mode == 'delete') {
           fetch(`${window.location.origin}/api/albums/${getTokenFromStorage()}`, {
             method: 'post',
@@ -35,11 +39,9 @@ function populateAlbum() {
             },
             body: JSON.stringify({ stickers: { [sticker]: (mode == 'write') } })
           })
-          .then((response) => updateAlbum(response.json()))
-          .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
-          if (mode == 'delete') {
-            removeFromSandbox(sticker);
-          }
+            .then((response) => updateAlbum(response.json()))
+            .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
+
         } else if (mode == 'sandbox') {
           if (stickerButton.getAttribute('js-sticker-filled') !== 'true') {
             if (stickerButton.getAttribute('js-sticker-sandbox') !== 'true') {
@@ -63,14 +65,14 @@ function populateTokenForm() {
   document.querySelector('.js-btn-token').addEventListener('click', () => {
     tokenId = document.querySelector('#album-token').value;
     fetch(`${window.location.origin}/api/albums/${tokenId}`)
-    .then((result) => {
-      localStorage.setItem('albumToken', tokenId);
-      setupAlbum(result.json());
-    })
-    .catch((err) => {
-      albumNode.innerHTML = JSON.stringify(err);
-      alert("Não foi possível configurar o Token");
-    });
+      .then((result) => {
+        localStorage.setItem('albumToken', tokenId);
+        setupAlbum(result.json());
+      })
+      .catch((err) => {
+        albumNode.innerHTML = JSON.stringify(err);
+        alert("Não foi possível configurar o Token");
+      });
   });
   document.querySelector('.nav-status').classList.add('hidden');
 }
@@ -78,8 +80,8 @@ function populateTokenForm() {
 function setupAlbum(contentPromise) {
   if (!contentPromise) {
     return fetch(`${window.location.origin}/api/albums/${getTokenFromStorage()}`)
-    .then((result) => setupAlbum(result.json()))
-    .catch((err) => { alert("Não foi possível sincronizar usando este Token"); });
+      .then((result) => setupAlbum(result.json()))
+      .catch((err) => { alert("Não foi possível sincronizar usando este Token"); });
   } else {
     return contentPromise.then(({ stickers }) => {
       populateAlbum();
