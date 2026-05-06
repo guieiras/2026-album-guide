@@ -27,10 +27,6 @@ function populateAlbum() {
       sectionContent.appendChild(stickerNode);
       stickerButton.addEventListener('click', () => {
         const mode = localStorage.getItem('mode');
-        if (mode == 'delete') {
-          removeFromSandbox(sticker);
-        }
-
         if (mode == 'write' || mode == 'delete') {
           fetch(`${window.location.origin}/api/albums/${getTokenFromStorage()}`, {
             method: 'post',
@@ -41,6 +37,10 @@ function populateAlbum() {
           })
             .then((response) => updateAlbum(response.json()))
             .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
+          if (mode == 'delete') {
+            removeFromSandbox(sticker);
+            stickerButton.removeAttribute('js-sticker-sandbox');
+          }
 
         } else if (mode == 'sandbox') {
           if (stickerButton.getAttribute('js-sticker-filled') !== 'true') {
