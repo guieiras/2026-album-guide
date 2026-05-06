@@ -16,6 +16,13 @@
     font-size: 11px;
 }
 
+.sticker-btn[js-sticker-sandbox=true] {
+    color: #fff;
+    background-color: #e47d88;
+    font-weight: bold;
+    font-size: 11px;
+}
+
 .navbar button {
     padding: 4px 1px;
 }

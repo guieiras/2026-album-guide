@@ -36,6 +36,10 @@ ViewFunctions = {
         document.querySelector('[js-option="toggleMode"]').innerHTML = '<i class="fa fa-eraser fa-fw"></i>'
         break;
       case 'delete':
+        localStorage.setItem('mode', 'sandbox')
+        document.querySelector('[js-option="toggleMode"]').innerHTML = '<i class="fa fa-archive fa-fw"></i>'
+        break;
+      case 'sandbox':
         localStorage.setItem('mode', 'view')
         document.querySelector('[js-option="toggleMode"]').innerHTML = '<i class="fa fa-eye fa-fw"></i>'
         break;

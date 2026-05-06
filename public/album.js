@@ -37,6 +37,16 @@ function populateAlbum() {
           })
           .then((response) => updateAlbum(response.json()))
           .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
+          if (mode == 'delete') {
+            removeFromSandbox(sticker);
+          }
+        } else if (mode == 'sandbox') {
+          if (stickerButton.getAttribute('js-sticker-filled') !== 'true') {
+            if (stickerButton.getAttribute('js-sticker-sandbox') !== 'true') {
+              addToSandbox(sticker);
+              stickerButton.setAttribute('js-sticker-sandbox', 'true');
+            }
+          }
         }
       });
     });
@@ -84,9 +94,16 @@ function updateAlbum(response) {
 }
 
 function updateStickerCount(object) {
+  const sandboxStickers = getSandboxStickers();
   Object.keys(object || {}).forEach((sticker) => {
     const stickerButton = document.querySelector(`[js-sticker-id="${sticker}"]`);
     stickerButton.setAttribute('js-sticker-filled', object[sticker]);
+  });
+  sandboxStickers.forEach((sticker) => {
+    const stickerButton = document.querySelector(`[js-sticker-id="${sticker}"]`);
+    if (stickerButton && stickerButton.getAttribute('js-sticker-filled') !== 'true') {
+      stickerButton.setAttribute('js-sticker-sandbox', 'true');
+    }
   });
   ViewFunctions.filter(localStorage.getItem('viewMode'));
   updateStatusesCount();
@@ -116,6 +133,29 @@ function updateStatusesCount() {
 
 function getTokenFromStorage() {
   return albumToken = localStorage.getItem('albumToken');
+}
+
+function getSandboxStickers() {
+  const stored = localStorage.getItem('sandboxStickers');
+  return stored ? JSON.parse(stored) : [];
+}
+
+function setSandboxStickers(stickers) {
+  localStorage.setItem('sandboxStickers', JSON.stringify(stickers));
+}
+
+function addToSandbox(sticker) {
+  const stickers = getSandboxStickers();
+  if (!stickers.includes(sticker)) {
+    stickers.push(sticker);
+    setSandboxStickers(stickers);
+  }
+}
+
+function removeFromSandbox(sticker) {
+  const stickers = getSandboxStickers();
+  const filtered = stickers.filter(s => s !== sticker);
+  setSandboxStickers(filtered);
 }
 
 init();
