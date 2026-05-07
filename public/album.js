@@ -35,10 +35,11 @@ function populateAlbum() {
             },
             body: JSON.stringify({ stickers: { [sticker]: (mode == 'write') } })
           })
-            .then((response) => updateAlbum(response.json()))
+            .then((response) => {
+              removeFromSandbox(sticker);
+              updateAlbum(response.json());
+            })
             .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
-          removeFromSandbox(sticker);
-          stickerButton.removeAttribute('js-sticker-sandbox');
         } else if (mode == 'sandbox') {
           if (stickerButton.getAttribute('js-sticker-filled') !== 'true') {
             if (stickerButton.getAttribute('js-sticker-sandbox') !== 'true') {
@@ -55,7 +56,7 @@ function populateAlbum() {
 
 function populateTokenForm() {
   const albumNode = document.querySelector("[js-album]");
-  albumNode.innerHTML = ""
+  albumNode.innerHTML = "";
   const tokenFormTemplate = document.querySelector("template[js-token-form]");
   albumNode.appendChild(document.importNode(tokenFormTemplate.content, true));
   setRequestTokenLink();
@@ -96,6 +97,7 @@ function updateStickerCount(object) {
   const sandboxStickers = getSandboxStickers();
   Object.keys(object || {}).forEach((sticker) => {
     const stickerButton = document.querySelector(`[js-sticker-id="${sticker}"]`);
+    stickerButton.removeAttribute('js-sticker-sandbox');
     stickerButton.setAttribute('js-sticker-filled', object[sticker]);
   });
   sandboxStickers.forEach((sticker) => {
