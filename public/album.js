@@ -37,11 +37,8 @@ function populateAlbum() {
           })
             .then((response) => updateAlbum(response.json()))
             .catch((err) => alert('Não foi possível atualizar os dados do álbum'));
-          if (mode == 'delete') {
-            removeFromSandbox(sticker);
-            stickerButton.removeAttribute('js-sticker-sandbox');
-          }
-
+          removeFromSandbox(sticker);
+          stickerButton.removeAttribute('js-sticker-sandbox');
         } else if (mode == 'sandbox') {
           if (stickerButton.getAttribute('js-sticker-filled') !== 'true') {
             if (stickerButton.getAttribute('js-sticker-sandbox') !== 'true') {
